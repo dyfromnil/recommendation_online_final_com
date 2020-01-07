@@ -18,7 +18,7 @@ import pickle
 import re
 
 #每天启动时清空推荐表
-db = pymysql.connect("rm-wz9u8mn9sd6ur5q66mo.mysql.rds.aliyuncs.com", "zjcintrec_rw", "Ak1qRSSbw6y7Lhkf", "zjcintrec")
+db = pymysql.connect("host", "user", "password", "database")
 cursor = db.cursor()
 cursor.execute("delete from zjc_intrec_supplier_recommend")
 cursor.execute("ALTER TABLE zjc_intrec_supplier_recommend AUTO_INCREMENT=1")
@@ -34,7 +34,7 @@ is_new for '新标书是否已经计算完毕并插入了insert_speed'
 
 # read data from MySql,return pandas dataframe
 def readDataFromMySql(sql_order):
-    db = pymysql.connect("rm-wz9u8mn9sd6ur5q66mo.mysql.rds.aliyuncs.com", "zjcintrec_rw", "Ak1qRSSbw6y7Lhkf", "zjcintrec")
+    db = pymysql.connect("host", "user", "password", "database")
     cursor = db.cursor()
     try:
         cursor.execute(sql_order)
@@ -44,19 +44,6 @@ def readDataFromMySql(sql_order):
         data = pd.DataFrame()
     db.close()
     return data
-
-# def readDataFromMySql_local(sql_order):
-#     db = pymysql.connect("localhost", "root", "Qq56138669", "zjc_test")
-#     cursor = db.cursor()
-#     try:
-#         cursor.execute(sql_order)
-#         data = cursor.fetchall()
-#         data = pd.DataFrame(list(data))
-#     except:
-#         data = pd.DataFrame()
-#     db.close()
-#     return data
-
 
 # ------------clustering------------
 
@@ -244,7 +231,7 @@ bidData.drop_duplicates(inplace=True)
 
 print('calculate scores,begin...')
 a = datetime.now()
-con=create_engine("mysql+pymysql://zjcintrec_rw:Ak1qRSSbw6y7Lhkf@rm-wz9u8mn9sd6ur5q66mo.mysql.rds.aliyuncs.com/zjcintrec",encoding='utf-8')
+con=create_engine("mysql+pymysql://username:password@host(:port)/database",encoding='utf-8')
 for bids_index, bids_row in bidData.iterrows():
     df=[]
     for key, value in supplierData_dict_later.items():

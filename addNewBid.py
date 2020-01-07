@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 import pickle
 
 def readDataFromMySql(sql_order):
-    db = pymysql.connect("rm-wz9u8mn9sd6ur5q66mo.mysql.rds.aliyuncs.com", "zjcintrec_rw", "Ak1qRSSbw6y7Lhkf", "zjcintrec")
+    db = pymysql.connect("host", "user", "password", "database")
     cursor = db.cursor()
     try:
         cursor.execute(sql_order)
@@ -73,7 +73,7 @@ if not (bids.empty):
     bids = bids[[0,1,2,4,5]]
 
     #update the state1 from 0 to 1
-    db = pymysql.connect("rm-wz9u8mn9sd6ur5q66mo.mysql.rds.aliyuncs.com", "zjcintrec_rw", "Ak1qRSSbw6y7Lhkf", "zjcintrec")
+    db = pymysql.connect("host", "user", "password", "database")
     # 使用cursor()方法获取操作游标
     cursor = db.cursor()
     for bids_index, bids_row in bids.iterrows():
@@ -92,7 +92,7 @@ if not (bids.empty):
 
     a=datetime.now()
 
-    con=create_engine("mysql+pymysql://zjcintrec_rw:Ak1qRSSbw6y7Lhkf@rm-wz9u8mn9sd6ur5q66mo.mysql.rds.aliyuncs.com/zjcintrec",encoding='utf-8')
+    con=create_engine("mysql+pymysql://username:password@host(:port)/database",encoding='utf-8')
     for bids_index, bids_row in bids.iterrows():
         df=[]
         near_points = get_nearest_points(np.array([[int(bids_row[1]),int(bids_row[2]),bids_row[4],bids_row[5]],]))
