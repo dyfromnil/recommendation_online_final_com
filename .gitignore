@@ -1,5 +1,6 @@
 dataForDump/
 interDump/
 __pycache__/
+
 !.gitignore
 
